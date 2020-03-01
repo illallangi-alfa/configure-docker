@@ -1,8 +1,23 @@
 ---
 dependencies:
-  - src: "https://git@github.com/illallangi-alfa/install-docker.git"
+  - src: "https://git@github.com/illallangi-alfa/configure-cgroup.git"
     scm: git
     version: master
-  - src: "https://git@github.com/illallangi-alfa/remove-docker.git"
+  - src: "https://git@github.com/illallangi-alfa/configure-containerd.git"
+    scm: git
+    version: master
+  - src: "https://git@github.com/illallangi-alfa/configure-device-mapper-persistent-data.git"
+    scm: git
+    version: master
+  - src: "https://git@github.com/illallangi-alfa/configure-docker-ce.git"
+    scm: git
+    version: master
+  - src: "https://git@github.com/illallangi-alfa/configure-lvm2.git"
+    scm: git
+    version: master
+  - src: "https://git@github.com/illallangi-alfa/configure-selinux.git"
+    scm: git
+    version: master
+  - src: "https://git@github.com/illallangi-alfa/handle-reboot.git"
     scm: git
     version: master
