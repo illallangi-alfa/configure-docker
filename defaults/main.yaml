@@ -1,0 +1,13 @@
+---
+docker:
+  directories:
+    common: &directories
+      - path:  "/etc/docker"
+      - path:  "/etc/systemd/system/docker.service.d"
+    debian_armv7l: *directories
+    redhat_x86_64: *directories
+  templates:
+    common: &templates
+      - dest:  "/etc/docker/daemon.json"
+    debian_armv7l: *templates
+    redhat_x86_64: *templates

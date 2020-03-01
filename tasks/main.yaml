@@ -1,0 +1,25 @@
+---
+- name: "Create directories"
+  file:
+    path:  "{{ item.path }}"
+    state: "directory"
+  with_items: "{{ docker.directories[(ansible_os_family | lower) + '_' + (ansible_architecture | lower)] | default([]) }}"
+  notify: "docker-restart"
+  tags:
+    - "docker"
+- name: "Update templates"
+  template:
+    src:  "{{ item.src | default((item.dest | basename ()) + '.j2')}}"
+    dest: "{{ item.dest }}"
+  with_items: "{{ docker.templates[(ansible_os_family | lower) + '_' + (ansible_architecture | lower)] | default([]) }}"
+  notify: "docker-restart"
+  tags:
+    - "docker"
+- name: "Start and enable docker"
+  systemd:
+    name: "docker"
+    state: "started"
+    enabled: "yes"
+    daemon_reload: "yes"
+  tags:
+    - "docker"
