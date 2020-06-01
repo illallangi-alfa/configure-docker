@@ -7,14 +7,25 @@
   notify: "docker-restart"
   tags:
     - "docker"
+
 - name: "Update templates"
   template:
     src:  "{{ item.src | default((item.dest | basename ()) + '.j2')}}"
     dest: "{{ item.dest }}"
   with_items: "{{ docker.templates[(ansible_os_family | lower) + '_' + (ansible_architecture | lower)] | default([]) }}"
+  notify: "docker-restart"             
+  tags:
+    - "docker"
+    
+- name: "Sign certificate"
+  shell:
+    cmd: |
+      cfssl gencert -ca /var/lib/illallangi/ca/intermediate/alfa/alfa.pem -ca-key /var/lib/illallangi/ca/intermediate/alfa/alfa-key.pem /etc/docker/docker-csr.json | cfssljson -bare /etc/docker/docker
+    creates: "/etc/docker/docker-key.pem"
   notify: "docker-restart"
   tags:
     - "docker"
+    
 - name: "Start and enable docker"
   systemd:
     name: "docker"

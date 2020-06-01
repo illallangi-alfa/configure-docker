@@ -6,6 +6,9 @@ dependencies:
   - src: "https://git@github.com/illallangi-alfa/configure-docker-ce.git"
     scm: git
     version: master
+  - src: "https://git@github.com/illallangi-alfa/configure-certmgr.git"
+    scm: git
+    version: master
   - src: "https://git@github.com/illallangi-alfa/handle-reboot.git"
     scm: git
     version: master
