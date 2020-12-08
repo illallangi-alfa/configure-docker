@@ -17,11 +17,20 @@
   tags:
     - "docker"
     
+- name: "Generate Docker CA"
+  shell:
+    cmd: |
+      cfssl gencert -initca /etc/docker/tls/ca-csr.json | cfssljson -bare /etc/docker/tls/ca
+    creates: "/etc/docker/tls/ca-key.pem"
+  notify: "docker-restart"
+  tags:
+    - "docker"
+    
 - name: "Sign certificate"
   shell:
     cmd: |
-      cfssl gencert -ca /var/lib/illallangi/ca/intermediate/alfa/alfa.pem -ca-key /var/lib/illallangi/ca/intermediate/alfa/alfa-key.pem /etc/docker/docker-csr.json | cfssljson -bare /etc/docker/docker
-    creates: "/etc/docker/docker-key.pem"
+      cfssl gencert -ca /etc/docker/tls/ca.pem -ca-key /etc/docker/tls/ca-key.pem /etc/docker/tls/server-csr.json | cfssljson -bare /etc/docker/tls/server
+    creates: "/etc/docker/tls/server-key.pem"
   notify: "docker-restart"
   tags:
     - "docker"

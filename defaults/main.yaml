@@ -3,13 +3,16 @@ docker:
   directories:
     common: &directories
       - path:  "/etc/docker"
+      - path:  "/etc/docker/tls"
       - path:  "/etc/systemd/system/docker.service.d"
     debian_armv7l: *directories
     debian_x86_64: *directories
   templates:
     common: &templates
       - dest:  "/etc/docker/daemon.json"
-      - dest:  "/etc/docker/docker-csr.json"
+      - dest:  "/etc/docker/tls/config.json"
+      - dest:  "/etc/docker/tls/ca-csr.json"
+      - dest:  "/etc/docker/tls/server-csr.json"
       - dest:  "/etc/systemd/system/docker.service.d/execstart.conf"
     debian_armv7l: *templates
     debian_x86_64: *templates
